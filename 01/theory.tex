@@ -1,0 +1,52 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+
+\title{LLE}
+\maketitle
+
+
+\section{Exercice}
+
+The goal of this exercice is to that the optimal weigths $W_{ij}$ minimizing the
+cost function $\mathcal{E}$ are independant with respect to the following
+symmetries: scaling, translating and rotating.
+
+\subsection{ Scaling \(\alpha\vec{X_i} \ }
+
+	$ \sum_{i}|\alpha\vec{X_i}-\sum_{j}W_{ij}\alpha\vec{X_j}|^2 $ \\
+	$ = \sum_{i}|\alpha\vec{X_i}-\alpha\sum_{j}W_{ij}\vec{X_j}|^2 $ \\
+	$ = \sum_{i}|\alpha(\vec{X_i}-\sum_{j}W_{ij}\vec{X_j})|^2 $ \\
+	$ = \sum_{i}|\alpha|^2|\vec{X_i}-\sum_{j}W_{ij}\vec{X_j}|^2 $ \\
+	$ = \alpha^2\sum_{i}|\vec{X_i}-\sum_{j}W_{ij}\vec{X_j}| $ \\
+	$ = \alpha^2\mathcal{E}(W)$
+	As $ \alpha\in\mathbb{R}^{+}\setminus{0} $ \\
+	\\
+	\\
+	As $\alpha$. So the cost function is invariant for this symmetry.
+
+
+
+\subsection{Translation $ \vec{X_i}+\vec{v}$}
+
+	$ \sum_{i}|\vec{X_i}+\vec{v}-\sum_{j}W_{ij}(\vec{X_j}+\vec{v})|^2 $ \\
+	$ = \sum_{i}|\vec{X_i}(1-\sum_{j}W_{ij}\vec{X_j}) +
+	\vec{v}(1-\sum_{j}W_{ij}\vec{v})|^2$
+
+\subsection{Rotation $ U.\vec{X_i}$}
+	$ \sum_{i}|U.\vec{X_i}-\sum_{j}W_{ij}U.\vec{X_j}|^2 $
+\\
+
+
+\section{Exercice}
+\subsection{}
+\newpage
+\subsection{}
+\subsection{}
+
+
+
+\end{document}

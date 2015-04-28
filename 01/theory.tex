@@ -1,52 +1,96 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \begin{document}
 
-\title{LLE}
+\title{ML2 - 01 - LLE}
+\author{Jan Laermann, Martin Nowak}
 \maketitle
 
+\section{Exercice 1: Symmetries}
 
-\section{Exercice}
+Show that the minima of the cost function
 
-The goal of this exercice is to that the optimal weigths $W_{ij}$ minimizing the
-cost function $\mathcal{E}$ are independant with respect to the following
-symmetries: scaling, translating and rotating.
+\begin{equation*}
+  \varepsilon(W) \sum_i |\vec{x_i} - \sum_j W_{ij} \vec{x_j}|^2
+\end{equation*}
 
-\subsection{ Scaling \(\alpha\vec{X_i} \ }
+is independent to scaling, translation, and rotation.
 
-	$ \sum_{i}|\alpha\vec{X_i}-\sum_{j}W_{ij}\alpha\vec{X_j}|^2 $ \\
-	$ = \sum_{i}|\alpha\vec{X_i}-\alpha\sum_{j}W_{ij}\vec{X_j}|^2 $ \\
-	$ = \sum_{i}|\alpha(\vec{X_i}-\sum_{j}W_{ij}\vec{X_j})|^2 $ \\
-	$ = \sum_{i}|\alpha|^2|\vec{X_i}-\sum_{j}W_{ij}\vec{X_j}|^2 $ \\
-	$ = \alpha^2\sum_{i}|\vec{X_i}-\sum_{j}W_{ij}\vec{X_j}| $ \\
-	$ = \alpha^2\mathcal{E}(W)$
-	As $ \alpha\in\mathbb{R}^{+}\setminus{0} $ \\
-	\\
-	\\
-	As $\alpha$. So the cost function is invariant for this symmetry.
+\subsection{Scaling ($\alpha\vec{x_i}$)}
 
+  \begin{eqnarray*}
+    \varepsilon(W) &=& \sum_i |\alpha \vec{x_i} - \sum_j W_{ij} \alpha \vec{x_j}|^2\\
+    &=& \sum_i |\alpha (\vec{x_i} - \sum_j W_{ij} \vec{x_j})|^2\\
+    &=& \alpha^2 \sum_i |\vec{x_i} - \sum_j W_{ij} \vec{x_j}|^2
+  \end{eqnarray*}
 
+  \begin{equation*}
+    \min_{\vec{W}} \varepsilon(W) = \min_{\vec{W}} \alpha^2 \varepsilon(W)
+  \end{equation*}
 
-\subsection{Translation $ \vec{X_i}+\vec{v}$}
+\subsection{Translation ($\vec{x_i} + \vec{v}$)}
 
-	$ \sum_{i}|\vec{X_i}+\vec{v}-\sum_{j}W_{ij}(\vec{X_j}+\vec{v})|^2 $ \\
-	$ = \sum_{i}|\vec{X_i}(1-\sum_{j}W_{ij}\vec{X_j}) +
-	\vec{v}(1-\sum_{j}W_{ij}\vec{v})|^2$
+  \begin{eqnarray*}
+    \varepsilon(W) &=& \sum_i |\vec{x_i} + \vec{v} - \sum_j W_{ij} \vec{x_j} + \vec{v}|^2\\
+    &=& \sum_i |\vec{x_i} - \sum_j W_{ij} \vec{x_j} + \vec{v} - \sum_j W_{ij} \vec{v}|^2 \Big\vert \text{with } \sum_j W_{ij} = 1 \\
+    &=& \sum_i |\vec{x_i} - \sum_j W_{ij} \vec{x_j}|^2\\
+  \end{eqnarray*}
 
-\subsection{Rotation $ U.\vec{X_i}$}
-	$ \sum_{i}|U.\vec{X_i}-\sum_{j}W_{ij}U.\vec{X_j}|^2 $
-\\
+\subsection{Rotation ($U\vec{x_i}$)}
 
+  \begin{eqnarray*}
+    \varepsilon(W) &=& \sum_i |U \vec{x_i} - \sum_j W_{ij} U \vec{x_j}|^2\\
+    &=& \sum_i |U(\vec{x_i} - \sum_j W_{ij} \vec{x_j})|^2 \Big\vert \text{with } |U\vec{v}|^2 = |\vec{v}|^2 \text{b/c U is normalized}\\
+    &=& \sum_i |\vec{x_i} - \sum_j W_{ij} \vec{x_j}|^2\\
+  \end{eqnarray*}
 
-\section{Exercice}
-\subsection{}
-\newpage
-\subsection{}
-\subsection{}
+\subsection{Rotation around arbitrary point}
 
+A rotation around an arbitrary point is a series of translation,
+rotation, and translation, thus already proved above.
 
+\section{Exercice 2: Lagrange Multipliers}
+
+\subsection{Optimal weights for one point ($\min_{\vec{w}} \vec{w}^TC\vec{w}$)}
+
+  \begin{eqnarray*}
+    |\vec{x} - \sum_j \vec{w}_j \vec{\eta_j}|^2 &=& |\sum_j \vec{w}_j (\vec{x} - \vec{\eta_j})|^2\\
+    &=& (\sum_j \vec{w}_j (\vec{x} - \vec{\eta_j}))^T (\sum_k \vec{w}_k (\vec{x} - \vec{\eta_k}))\\
+    &=& \sum_{jk} \vec{w}_j \vec{w}_k (\vec{x} - \eta_j)^T(\vec{x} - \eta_k)\\
+    &=& \sum_{jk} \vec{w}_j \vec{w}_k C_{jk}\\
+    &=& \vec{w}^T C \vec{w}\\
+  \end{eqnarray*}
+
+\subsection{Closed solution for optimum}
+
+  \begin{eqnarray*}
+    \Lambda(\vec{w},\lambda) &=& \vec{w}^TC\vec{w} + \lambda(\vec{w}^T \vec{1} - 1)
+  \end{eqnarray*}
+
+  \begin{eqnarray*}
+    \frac{\nabla\Lambda(\vec{w},\lambda)}{\delta\vec{w}} &=& 2 C \vec{w} + \lambda \vec{1} = 0\\
+    \vec{w} &=& - \frac{\lambda}{2} C^{-1} \vec{1}\\
+    \frac{\nabla\Lambda(\vec{w},\lambda)}{\delta\lambda} &=& \vec{w}^T \vec{1} - 1 = 0\\
+    \text{substituting } \vec{w}&&\\
+    (- \frac{\lambda}{2} C^{-1} \vec{1})^T \vec{1} &=& 1\\
+    (C^{-1} \vec{1})^T \vec{1} &=& - \frac{2}{\lambda}\\
+    \vec{1}^T C^{-1^T} \vec{1} &=& - \frac{2}{\lambda} \Big\vert \text{with } C^{-1^T} = C^{-1} \text{(C is symmetric)}\\
+    \lambda &=& -\frac{2}{\vec{1}^T C^{-1} \vec{1}}\\
+    \text{plugged into above eq. }&&\\
+    \vec{w} &=& \frac{C^{-1} \vec{1}}{\vec{1}^T C^{-1} \vec{1}}
+  \end{eqnarray*}
+
+\subsection{Alternative calculation of closed solution}
+
+  \begin{eqnarray*}
+    C \vec{w} &=& \vec{1}\\
+    \vec{w} &=& C^{-1} \vec{1}\\
+    \text{scaling } k \vec{w}&&\\
+    k \vec{w}^T \vec{1} &=& 1\\
+    k (C^{-1} \vec{1})^T \vec{1} &=& 1\\
+    k &=& \frac{1}{\vec{1}^T C^{-1^T} \vec{1}}\\
+    k \vec{w} &=& \frac{C^{-1} \vec{1}}{\vec{1}^T C^{-1^T} \vec{1}}
+  \end{eqnarray*}
 
 \end{document}
